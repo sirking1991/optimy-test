@@ -59,7 +59,8 @@ class NewsManager
 	*/
 	public function deleteNews($id)
 	{
-		$comments = CommentManager::getInstance()->listComments();
+		$commentManager = CommentManager::getInstance();
+		$comments = $commentManager->listComments();
 		$idsToDelete = [];
 
 		foreach ($comments as $comment) {
@@ -69,7 +70,7 @@ class NewsManager
 		}
 
 		foreach($idsToDelete as $id) {
-			CommentManager::getInstance()->deleteComment($id);
+			$commentManager->deleteComment($id);
 		}
 
 		$sql = "DELETE FROM `news` WHERE `id`=" . $id;
