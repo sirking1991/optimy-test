@@ -5,6 +5,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 use App\Utilities\CommentManager;
 use App\Utilities\NewsManager;
 
+define('BASE_PATH', __DIR__);
+
 $newsManager = NewsManager::getInstance();
 $commentManager = CommentManager::getInstance();
 

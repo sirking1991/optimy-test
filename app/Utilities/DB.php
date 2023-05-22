@@ -2,6 +2,8 @@
 
 namespace App\Utilities;
 
+use Dotenv\Dotenv;
+
 class DB
 {
 	private $pdo;
@@ -10,9 +12,15 @@ class DB
 
 	private function __construct()
 	{
-		$dsn = 'mysql:dbname=optimy;host=127.0.0.1';
-		$user = 'root';
-		$password = 'password';
+		$dotenv = Dotenv::createImmutable(BASE_PATH);
+		$dotenv->load();
+
+		$dbHost = getenv('DB_HOST');
+		$dbName = getenv('DB_NAME');
+		$user = getenv('DB_USER');
+		$password = getenv('DB_PASSWORD');
+		
+		$dsn = "mysql:dbname={$dbName};host={$dbHost}";
 
 		$this->pdo = new \PDO($dsn, $user, $password);
 	}
