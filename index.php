@@ -15,7 +15,7 @@ foreach ($newsManager->listNews() as $news) {
 		$news->getTitle() . 
 		' ' . 
 		str_repeat('#', 12) . 
-		'\n'
+		"\n"
 	);
 
 	echo($news->getBody() . "\n");
