@@ -1,14 +1,19 @@
 <?php
 
+namespace App\Utilities;
+
+use App\Classes\News;
+use App\Utilities\DB;
+use App\Utilities\CommentManager;
+
 class NewsManager
 {
 	private static $instance = null;
+	
+	protected $db;
 
-	private function __construct()
-	{
-		require_once(ROOT . '/utils/DB.php');
-		require_once(ROOT . '/utils/CommentManager.php');
-		require_once(ROOT . '/class/News.php');
+	public function __construct() {
+		$this->db = DB::getInstance();
 	}
 
 	public static function getInstance()
@@ -25,8 +30,7 @@ class NewsManager
 	*/
 	public function listNews()
 	{
-		$db = DB::getInstance();
-		$rows = $db->select('SELECT * FROM `news`');
+		$rows = $this->db->select('SELECT * FROM `news`');
 
 		$news = [];
 		foreach($rows as $row) {
@@ -45,10 +49,9 @@ class NewsManager
 	*/
 	public function addNews($title, $body)
 	{
-		$db = DB::getInstance();
 		$sql = "INSERT INTO `news` (`title`, `body`, `created_at`) VALUES('". $title . "','" . $body . "','" . date('Y-m-d') . "')";
-		$db->exec($sql);
-		return $db->lastInsertId($sql);
+		$this->db->exec($sql);
+		return $this->db->lastInsertId($sql);
 	}
 
 	/**
@@ -69,8 +72,7 @@ class NewsManager
 			CommentManager::getInstance()->deleteComment($id);
 		}
 
-		$db = DB::getInstance();
 		$sql = "DELETE FROM `news` WHERE `id`=" . $id;
-		return $db->exec($sql);
+		return $this->db->exec($sql);
 	}
 }

@@ -1,0 +1,17 @@
+{
+    "name": "sirking/optimy_php_test",
+    "description": "Optimy Test",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "sirking1991",
+            "email": "sirking1991@gmail.com"
+        }
+    ],
+    "require": {}
+}

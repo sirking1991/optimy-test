@@ -1,15 +1,25 @@
 <?php
 
-define('ROOT', __DIR__);
-require_once(ROOT . '/utils/NewsManager.php');
-require_once(ROOT . '/utils/CommentManager.php');
+require 'vendor/autoload.php';
+
+use App\Utilities\CommentManager;
+use App\Utilities\NewsManager;
 
 $newsManager = NewsManager::getInstance();
 $commentManager = CommentManager::getInstance();
 
 foreach ($newsManager->listNews() as $news) {
-	echo("############ NEWS " . $news->getTitle() . " ############\n");
+	echo( 
+		str_repeat('#', 12) . 
+		' NEWS ' . 
+		$news->getTitle() . 
+		' ' . 
+		str_repeat('#', 12) . 
+		'\n'
+	);
+
 	echo($news->getBody() . "\n");
+
 	foreach ($commentManager->listComments() as $comment) {
 		if ($comment->getNewsId() == $news->getId()) {
 			echo("Comment " . $comment->getId() . " : " . $comment->getBody() . "\n");
